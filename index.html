@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>We'll Be Right Back — Under Maintenance</title>
+<meta name="description" content="Our site is currently undergoing scheduled maintenance. We'll be back shortly.">
+<style>
+  :root{
+    --bg-1:#0b0f1a;
+    --bg-2:#131a2b;
+    --accent:#6ee7ff;
+    --accent-2:#a78bfa;
+    --accent-3:#ff7ac6;
+    --text:#eef2ff;
+    --muted:#9aa4c4;
+    --card:rgba(255,255,255,0.06);
+    --card-border:rgba(255,255,255,0.14);
+  }
+  *{box-sizing:border-box;}
+  html,body{
+    margin:0;
+    padding:0;
+    height:100%;
+    width:100%;
+    overflow-x:hidden;
+  }
+  body{
+    font-family:'Segoe UI', system-ui, -apple-system, Roboto, Helvetica, Arial, sans-serif;
+    background:
+      radial-gradient(1200px 600px at 15% -10%, rgba(110,231,255,0.12), transparent 60%),
+      radial-gradient(1000px 600px at 85% 110%, rgba(167,139,250,0.14), transparent 60%),
+      linear-gradient(160deg, var(--bg-1), var(--bg-2));
+    color:var(--text);
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    position:relative;
+  }
+
+  /* Animated aurora blobs */
+  .blob{
+    position:fixed;
+    border-radius:50%;
+    filter:blur(80px);
+    opacity:0.35;
+    z-index:0;
+    animation:drift 18s ease-in-out infinite;
+  }
+  .blob.b1{
+    width:420px;height:420px;
+    background:var(--accent);
+    top:-100px; left:-120px;
+    animation-duration:22s;
+  }
+  .blob.b2{
+    width:380px;height:380px;
+    background:var(--accent-2);
+    bottom:-140px; right:-100px;
+    animation-duration:26s;
+    animation-delay:2s;
+  }
+  .blob.b3{
+    width:300px;height:300px;
+    background:var(--accent-3);
+    top:40%; right:10%;
+    animation-duration:20s;
+    animation-delay:4s;
+  }
+  @keyframes drift{
+    0%,100%{ transform:translate(0,0) scale(1); }
+    33%{ transform:translate(40px,-30px) scale(1.08); }
+    66%{ transform:translate(-30px,25px) scale(0.95); }
+  }
+
+  /* Starfield */
+  .stars{
+    position:fixed;
+    inset:0;
+    z-index:0;
+    background-image:
+      radial-gradient(1.5px 1.5px at 20% 30%, rgba(255,255,255,0.6) 50%, transparent 51%),
+      radial-gradient(1.5px 1.5px at 65% 15%, rgba(255,255,255,0.5) 50%, transparent 51%),
+      radial-gradient(1px 1px at 40% 70%, rgba(255,255,255,0.4) 50%, transparent 51%),
+      radial-gradient(1.5px 1.5px at 85% 60%, rgba(255,255,255,0.5) 50%, transparent 51%),
+      radial-gradient(1px 1px at 10% 85%, rgba(255,255,255,0.4) 50%, transparent 51%),
+      radial-gradient(1.5px 1.5px at 55% 90%, rgba(255,255,255,0.35) 50%, transparent 51%),
+      radial-gradient(1px 1px at 92% 25%, rgba(255,255,255,0.4) 50%, transparent 51%);
+    background-size:100% 100%;
+    opacity:0.6;
+    animation:twinkle 4s ease-in-out infinite alternate;
+  }
+  @keyframes twinkle{
+    from{ opacity:0.35; }
+    to{ opacity:0.75; }
+  }
+
+  .wrap{
+    position:relative;
+    z-index:2;
+    width:100%;
+    max-width:640px;
+    margin:32px;
+    padding:48px 44px 40px;
+    background:var(--card);
+    border:1px solid var(--card-border);
+    border-radius:24px;
+    backdrop-filter:blur(18px);
+    -webkit-backdrop-filter:blur(18px);
+    box-shadow:0 20px 60px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.06);
+    text-align:center;
+  }
+
+  .badge{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:6px 14px;
+    font-size:12.5px;
+    letter-spacing:0.06em;
+    text-transform:uppercase;
+    font-weight:600;
+    color:var(--accent);
+    background:rgba(110,231,255,0.1);
+    border:1px solid rgba(110,231,255,0.3);
+    border-radius:999px;
+    margin-bottom:26px;
+  }
+  .badge .dot{
+    width:7px;height:7px;border-radius:50%;
+    background:var(--accent);
+    box-shadow:0 0 8px var(--accent);
+    animation:pulse 1.6s ease-in-out infinite;
+  }
+  @keyframes pulse{
+    0%,100%{ opacity:1; transform:scale(1); }
+    50%{ opacity:0.4; transform:scale(0.7); }
+  }
+
+  .gear-scene{
+    width:140px;
+    height:110px;
+    margin:0 auto 20px;
+    position:relative;
+  }
+  .gear{
+    position:absolute;
+    color:var(--accent);
+  }
+  .gear svg{ display:block; filter:drop-shadow(0 4px 12px rgba(110,231,255,0.35)); }
+  .gear.g1{ width:64px; height:64px; top:6px; left:10px; animation:spin 8s linear infinite; }
+  .gear.g2{ width:44px; height:44px; top:44px; left:66px; color:var(--accent-2); animation:spin-rev 6s linear infinite; }
+  .gear.g3{ width:30px; height:30px; top:0px; left:92px; color:var(--accent-3); animation:spin 5s linear infinite; }
+  @keyframes spin{ from{ transform:rotate(0deg); } to{ transform:rotate(360deg); } }
+  @keyframes spin-rev{ from{ transform:rotate(360deg); } to{ transform:rotate(0deg); } }
+
+  h1{
+    font-size:clamp(28px, 4vw, 38px);
+    margin:0 0 14px;
+    font-weight:700;
+    background:linear-gradient(90deg, var(--accent), var(--accent-2) 60%, var(--accent-3));
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+  }
+  p.lead{
+    color:var(--muted);
+    font-size:16px;
+    line-height:1.65;
+    max-width:480px;
+    margin:0 auto 30px;
+  }
+
+  .progress-wrap{
+    margin:0 auto 32px;
+    max-width:420px;
+  }
+  .progress-label{
+    display:flex;
+    justify-content:space-between;
+    font-size:12.5px;
+    color:var(--muted);
+    margin-bottom:8px;
+    letter-spacing:0.02em;
+  }
+  .progress-track{
+    height:8px;
+    border-radius:999px;
+    background:rgba(255,255,255,0.08);
+    overflow:hidden;
+    border:1px solid rgba(255,255,255,0.08);
+  }
+  .progress-fill{
+    height:100%;
+    width:72%;
+    border-radius:999px;
+    background:linear-gradient(90deg, var(--accent), var(--accent-2), var(--accent-3));
+    background-size:200% 100%;
+    animation:shimmer 2.4s linear infinite;
+  }
+  @keyframes shimmer{
+    0%{ background-position:0% 0%; }
+    100%{ background-position:200% 0%; }
+  }
+
+  .countdown{
+    display:flex;
+    justify-content:center;
+    gap:14px;
+    margin:0 auto 32px;
+    flex-wrap:wrap;
+  }
+  .countdown .unit{
+    min-width:74px;
+    padding:14px 10px;
+    background:rgba(255,255,255,0.05);
+    border:1px solid rgba(255,255,255,0.1);
+    border-radius:14px;
+  }
+  .countdown .num{
+    font-size:26px;
+    font-weight:700;
+    font-variant-numeric:tabular-nums;
+    color:var(--text);
+  }
+  .countdown .lbl{
+    font-size:10.5px;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color:var(--muted);
+    margin-top:2px;
+  }
+
+  form.notify{
+    display:flex;
+    gap:10px;
+    max-width:420px;
+    margin:0 auto 8px;
+    flex-wrap:wrap;
+  }
+  form.notify input[type="email"]{
+    flex:1;
+    min-width:180px;
+    padding:13px 16px;
+    border-radius:12px;
+    border:1px solid rgba(255,255,255,0.14);
+    background:rgba(255,255,255,0.05);
+    color:var(--text);
+    font-size:14.5px;
+    outline:none;
+    transition:border-color .2s, background .2s;
+  }
+  form.notify input[type="email"]::placeholder{ color:var(--muted); }
+  form.notify input[type="email"]:focus{
+    border-color:var(--accent);
+    background:rgba(255,255,255,0.08);
+  }
+  form.notify button{
+    padding:13px 22px;
+    border:none;
+    border-radius:12px;
+    font-size:14.5px;
+    font-weight:600;
+    color:#0b0f1a;
+    background:linear-gradient(90deg, var(--accent), var(--accent-2));
+    cursor:pointer;
+    transition:transform .15s ease, box-shadow .15s ease;
+    white-space:nowrap;
+  }
+  form.notify button:hover{
+    transform:translateY(-2px);
+    box-shadow:0 10px 24px rgba(110,231,255,0.25);
+  }
+  form.notify button:active{ transform:translateY(0); }
+
+  .form-msg{
+    min-height:20px;
+    font-size:13px;
+    color:var(--accent);
+    margin-bottom:22px;
+  }
+
+  .socials{
+    display:flex;
+    justify-content:center;
+    gap:14px;
+    margin-top:6px;
+  }
+  .socials a{
+    width:40px; height:40px;
+    display:flex; align-items:center; justify-content:center;
+    border-radius:50%;
+    border:1px solid rgba(255,255,255,0.12);
+    background:rgba(255,255,255,0.04);
+    color:var(--muted);
+    text-decoration:none;
+    transition:all .2s ease;
+  }
+  .socials a:hover{
+    color:var(--bg-1);
+    background:var(--accent);
+    border-color:var(--accent);
+    transform:translateY(-3px);
+  }
+  .socials svg{ width:18px; height:18px; }
+
+  footer.note{
+    margin-top:30px;
+    font-size:12.5px;
+    color:var(--muted);
+    opacity:0.8;
+  }
+
+  @media (max-width:480px){
+    .wrap{ padding:38px 24px 32px; border-radius:18px; }
+    .countdown .unit{ min-width:62px; padding:10px 6px; }
+    .countdown .num{ font-size:20px; }
+  }
+</style>
+</head>
+<body>
+
+  <div class="stars"></div>
+  <div class="blob b1"></div>
+  <div class="blob b2"></div>
+  <div class="blob b3"></div>
+
+  <main class="wrap">
+    <span class="badge"><span class="dot"></span>Scheduled Maintenance</span>
+
+    <div class="gear-scene">
+      <div class="gear g1">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 8a4 4 0 100 8 4 4 0 000-8z" stroke="currentColor" stroke-width="1.6"/>
+          <path d="M19.4 13a7.4 7.4 0 000-2l2-1.2-2-3.4-2.3.7a7.6 7.6 0 00-1.7-1L14.9 3h-3.8l-.5 2.1a7.6 7.6 0 00-1.7 1l-2.3-.7-2 3.4L6.6 11a7.4 7.4 0 000 2l-2 1.2 2 3.4 2.3-.7c.5.42 1.08.77 1.7 1l.5 2.1h3.8l.5-2.1c.62-.23 1.2-.58 1.7-1l2.3.7 2-3.4-2-1.2z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="gear g2">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 8a4 4 0 100 8 4 4 0 000-8z" stroke="currentColor" stroke-width="1.8"/>
+          <path d="M19.4 13a7.4 7.4 0 000-2l2-1.2-2-3.4-2.3.7a7.6 7.6 0 00-1.7-1L14.9 3h-3.8l-.5 2.1a7.6 7.6 0 00-1.7 1l-2.3-.7-2 3.4L6.6 11a7.4 7.4 0 000 2l-2 1.2 2 3.4 2.3-.7c.5.42 1.08.77 1.7 1l.5 2.1h3.8l.5-2.1c.62-.23 1.2-.58 1.7-1l2.3.7 2-3.4-2-1.2z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="gear g3">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 8a4 4 0 100 8 4 4 0 000-8z" stroke="currentColor" stroke-width="2"/>
+          <path d="M19.4 13a7.4 7.4 0 000-2l2-1.2-2-3.4-2.3.7a7.6 7.6 0 00-1.7-1L14.9 3h-3.8l-.5 2.1a7.6 7.6 0 00-1.7 1l-2.3-.7-2 3.4L6.6 11a7.4 7.4 0 000 2l-2 1.2 2 3.4 2.3-.7c.5.42 1.08.77 1.7 1l.5 2.1h3.8l.5-2.1c.62-.23 1.2-.58 1.7-1l2.3.7 2-3.4-2-1.2z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+        </svg>
+      </div>
+    </div>
+
+    <h1>We're Polishing Things Up</h1>
+    <p class="lead">
+      Our site is currently down for scheduled maintenance while we make improvements.
+      We'll be back online shortly — thanks for your patience!
+    </p>
+
+    <div class="progress-wrap">
+      <div class="progress-label">
+        <span>Maintenance progress</span>
+        <span id="progressPercent">72%</span>
+      </div>
+      <div class="progress-track">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+    </div>
+
+    <div class="countdown" id="countdown">
+      <div class="unit"><div class="num" id="cd-hours">00</div><div class="lbl">Hours</div></div>
+      <div class="unit"><div class="num" id="cd-mins">00</div><div class="lbl">Minutes</div></div>
+      <div class="unit"><div class="num" id="cd-secs">00</div><div class="lbl">Seconds</div></div>
+    </div>
+
+    <form class="notify" id="notifyForm">
+      <input type="email" id="notifyEmail" placeholder="you@example.com" required autocomplete="email">
+      <button type="submit">Notify Me</button>
+    </form>
+    <div class="form-msg" id="formMsg"></div>
+
+    <div class="socials">
+      <a href="#" aria-label="Twitter / X" title="Twitter / X">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.9 2H22l-7.5 8.6L23 22h-6.9l-5.4-6.9L4.6 22H1.5l8-9.2L1 2h7.1l4.9 6.4L18.9 2Zm-1.2 18h1.9L7.4 4h-2l12.3 16Z"/></svg>
+      </a>
+      <a href="#" aria-label="Instagram" title="Instagram">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2c2.7 0 3.05.01 4.12.06 1.07.05 1.8.22 2.44.47.66.26 1.22.6 1.77 1.16.55.55.9 1.11 1.16 1.77.25.64.42 1.37.47 2.44.05 1.07.06 1.42.06 4.1s-.01 3.05-.06 4.12c-.05 1.07-.22 1.8-.47 2.44a4.94 4.94 0 0 1-1.16 1.77 4.94 4.94 0 0 1-1.77 1.16c-.64.25-1.37.42-2.44.47-1.07.05-1.42.06-4.12.06s-3.05-.01-4.12-.06c-1.07-.05-1.8-.22-2.44-.47a4.94 4.94 0 0 1-1.77-1.16 4.94 4.94 0 0 1-1.16-1.77c-.25-.64-.42-1.37-.47-2.44C2.01 15.05 2 14.7 2 12s.01-3.05.06-4.12c.05-1.07.22-1.8.47-2.44.26-.66.6-1.22 1.16-1.77A4.94 4.94 0 0 1 5.46.51c.64-.25 1.37-.42 2.44-.47C8.97.01 9.32 0 12 0Zm0 5a5 5 0 1 0 0 10 5 5 0 0 0 0-10Zm0 8.2a3.2 3.2 0 1 1 0-6.4 3.2 3.2 0 0 1 0 6.4ZM18.4 5a1.2 1.2 0 1 0-2.4 0 1.2 1.2 0 0 0 2.4 0Z"/></svg>
+      </a>
+      <a href="#" aria-label="LinkedIn" title="LinkedIn">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3 9h4v12H3V9Zm7 0h3.8v1.7h.05c.53-1 1.83-2.05 3.77-2.05 4.03 0 4.78 2.65 4.78 6.1V21h-4v-5.5c0-1.3-.02-3-1.83-3-1.83 0-2.1 1.43-2.1 2.9V21h-4V9Z"/></svg>
+      </a>
+      <a href="mailto:hello@example.com" aria-label="Email" title="Email">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M2 4h20v16H2V4Zm2 2v.5l8 5.5 8-5.5V6H4Zm16 3.1-7.5 5.15a1 1 0 0 1-1 0L4 9.1V18h16V9.1Z"/></svg>
+      </a>
+    </div>
+
+    <footer class="note">&copy; <span id="year"></span> Your Website. All rights reserved.</footer>
+  </main>
+
+  <script>
+    // Countdown target: set to a future date/time for your maintenance window.
+    var TARGET_DATE = new Date();
+    TARGET_DATE.setHours(TARGET_DATE.getHours() + 6);
+
+    function updateCountdown(){
+      var now = new Date();
+      var diff = TARGET_DATE - now;
+      if (diff < 0) diff = 0;
+      var h = Math.floor(diff / (1000*60*60));
+      var m = Math.floor((diff % (1000*60*60)) / (1000*60));
+      var s = Math.floor((diff % (1000*60)) / 1000);
+      document.getElementById('cd-hours').textContent = String(h).padStart(2,'0');
+      document.getElementById('cd-mins').textContent = String(m).padStart(2,'0');
+      document.getElementById('cd-secs').textContent = String(s).padStart(2,'0');
+    }
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    document.getElementById('notifyForm').addEventListener('submit', function(e){
+      e.preventDefault();
+      var email = document.getElementById('notifyEmail').value.trim();
+      var msg = document.getElementById('formMsg');
+      if (email) {
+        msg.textContent = "Thanks! We'll email " + email + " the moment we're back online.";
+        document.getElementById('notifyEmail').value = '';
+      }
+    });
+  </script>
+
+</body>
+</html>
