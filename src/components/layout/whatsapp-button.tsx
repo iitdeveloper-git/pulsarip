@@ -1,9 +1,23 @@
 "use client";
 
-import { Phone } from "lucide-react";
 import { telHref, whatsappHref } from "@/config/site";
 
-// WhatsApp SVG icon (official brand icon, more recognisable than MessageCircle)
+// Classic telephone handset SVG (matches the style in the reference)
+function PhoneHandsetIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      className={className}
+      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z" />
+    </svg>
+  );
+}
+
+// Official WhatsApp brand SVG icon
 function WhatsAppIcon({ className }: { className?: string }) {
   return (
     <svg
@@ -19,9 +33,12 @@ function WhatsAppIcon({ className }: { className?: string }) {
 }
 
 /**
- * Floating action buttons — Call + WhatsApp
- * Shown on all screen sizes, stacked vertically on the bottom-right.
- * Hidden individually if phone/WhatsApp env vars are not set.
+ * Floating Call + WhatsApp action buttons
+ * - Yellow circle for Call (matches iitdeveloper.com style)
+ * - Green circle for WhatsApp
+ * - Pulse ring animation on both
+ * - Stacked vertically, fixed bottom-right
+ * - Hidden when env vars not set
  */
 export function WhatsAppFloatingButton() {
   const tel = telHref();
@@ -30,38 +47,54 @@ export function WhatsAppFloatingButton() {
   if (!tel && !wa) return null;
 
   return (
-    <div className="fixed bottom-20 right-4 z-40 flex flex-col gap-3 sm:bottom-6 sm:right-6">
-      {/* Call button */}
-      {tel && (
-        <a
-          href={tel}
-          className="group flex h-14 w-14 items-center justify-center rounded-full bg-navy-900 text-white shadow-lg transition-all hover:scale-105 hover:bg-navy-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-navy-900"
-          aria-label="Call PulsarIP"
-        >
-          <Phone className="h-6 w-6" aria-hidden />
-          {/* Tooltip */}
-          <span className="pointer-events-none absolute right-16 whitespace-nowrap rounded-md bg-navy-900 px-2.5 py-1 text-xs font-medium text-white opacity-0 transition-opacity group-hover:opacity-100">
-            Call us
-          </span>
-        </a>
-      )}
+    <>
+      {/* Inline keyframes for pulse animation */}
+      <style>{`
+        @keyframes pip-pulse {
+          0%   { transform: scale(1);   opacity: 0.6; }
+          70%  { transform: scale(1.7); opacity: 0; }
+          100% { transform: scale(1.7); opacity: 0; }
+        }
+        .pip-pulse::before {
+          content: '';
+          position: absolute;
+          inset: 0;
+          border-radius: 9999px;
+          animation: pip-pulse 2s ease-out infinite;
+        }
+        .pip-pulse-yellow::before { background: #EAB308; }
+        .pip-pulse-green::before  { background: #25D366; }
+      `}</style>
 
-      {/* WhatsApp button */}
-      {wa && (
-        <a
-          href={wa}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="group flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-white shadow-lg transition-all hover:scale-105 hover:bg-[#1ebe5d] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#25D366]"
-          aria-label="Chat with PulsarIP on WhatsApp"
-        >
-          <WhatsAppIcon className="h-7 w-7" />
-          {/* Tooltip */}
-          <span className="pointer-events-none absolute right-16 whitespace-nowrap rounded-md bg-[#25D366] px-2.5 py-1 text-xs font-medium text-white opacity-0 transition-opacity group-hover:opacity-100">
-            WhatsApp
-          </span>
-        </a>
-      )}
-    </div>
+      <div className="fixed bottom-20 right-4 z-50 flex flex-col items-center gap-4 sm:bottom-8 sm:right-6">
+
+        {/* Call — yellow */}
+        {tel && (
+          <a
+            href={tel}
+            aria-label="Call PulsarIP"
+            className="pip-pulse pip-pulse-yellow relative flex h-14 w-14 items-center justify-center rounded-full shadow-[0_4px_20px_rgba(234,179,8,0.5)] transition-transform hover:scale-110 active:scale-95"
+            style={{ background: "#EAB308" }}
+          >
+            <PhoneHandsetIcon className="h-6 w-6 text-white drop-shadow" />
+          </a>
+        )}
+
+        {/* WhatsApp — green */}
+        {wa && (
+          <a
+            href={wa}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Chat with PulsarIP on WhatsApp"
+            className="pip-pulse pip-pulse-green relative flex h-14 w-14 items-center justify-center rounded-full shadow-[0_4px_20px_rgba(37,211,102,0.5)] transition-transform hover:scale-110 active:scale-95"
+            style={{ background: "#25D366" }}
+          >
+            <WhatsAppIcon className="h-7 w-7 text-white drop-shadow" />
+          </a>
+        )}
+
+      </div>
+    </>
   );
 }
