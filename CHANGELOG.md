@@ -12,7 +12,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Full Next.js 14 (App Router) project setup with TypeScript
 - Tailwind CSS configuration with custom design tokens
-- ESLint and Prettier configuration for code quality
 - `Dockerfile` with multi-stage build for optimised production image (`output: standalone`)
 - `docker-compose.yml` for local containerised development
 - GitHub Actions CI/CD workflows (`.github/`)
@@ -22,18 +21,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `public/` — static assets including `maintenance.html` branded page
 - `docs/` — project documentation
 - `.env.example` — complete environment variable reference with all keys documented
+- `netlify.toml` — Netlify configuration for Next.js App Router SSR builds and runtime
 - `CHANGELOG.md` — this file
+- **Advocate Lucky Singh** founder section on About page with Person JSON-LD schema
+- Floating Call (yellow) and WhatsApp (green) buttons with pulse animations and hover scaling matching reference design
+- Business structure comparison table (Proprietorship, OPC, LLP, Private Limited) on business registration overview page
 
 ### Changed
-- `.gitignore` — expanded with complete entries for Next.js + TypeScript + Docker:
-  - Added `dist/`, `.turbo/`, `.cache/`, `*.log` catch-all, `.eslintcache`, `.stylelintcache`
-  - Added `.yarn/install-state.gz`, `Thumbs.db`
-- `.dockerignore` — major expansion for production Docker builds:
-  - Added `Dockerfile*`, `docker-compose*.yml`, `.github/`, `.claude/`
-  - Added dev tooling configs (`.eslintrc*`, `.prettierrc*`, `tsconfig.tsbuildinfo`)
-  - Added test tooling (`vitest*`, `playwright.config.ts`, `e2e/`)
-  - Added security entries (`*.pem`) and OS artifacts (`.DS_Store`, `Thumbs.db`)
-- `.env.example` — added `NEXT_PUBLIC_GA_ID=G-XXXXXXXXXX` placeholder for GA4
+- `.gitignore` — expanded with complete entries for Next.js + TypeScript + Docker
+- `.dockerignore` — major expansion for production Docker builds
+- `.env.example` — added `NEXT_PUBLIC_GA_ID` placeholder
+- `next.config.ts` — removed `output: "standalone"` to support Netlify builds
+- `src/components/layout/analytics.tsx` — loaded GA4 using `beforeInteractive` strategy in `<head>` so Google's crawler detects it immediately
+- `src/app/insights/page.tsx` — filtered out draft articles from the public listing
+- `src/app/contact/page.tsx` — removed fallback TBD strings, only showing contact cards when environment variables are set
+- `src/lib/seo/jsonld.ts` — enhanced `Organization` and `LegalService` structured data
+- `src/components/layout/whatsapp-button.tsx` and `mobile-call-bar.tsx` — converted to server components (removed `"use client"`) to prevent hydration flash/disappearing buttons
 
 ### Removed
 - `index.html` — replaced by Next.js App Router pages
