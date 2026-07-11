@@ -9,7 +9,7 @@ import { Footer } from "@/components/layout/footer";
 import { WhatsAppFloatingButton } from "@/components/layout/whatsapp-button";
 import { MobileStickyCallBar } from "@/components/layout/mobile-call-bar";
 import { CookieConsent } from "@/components/layout/cookie-consent";
-import { Analytics, GoogleTagManagerScript, GoogleTagManagerNoscript } from "@/components/layout/analytics";
+import { Analytics, GoogleTagManagerScript, GoogleTagManagerNoscript, GoogleAnalyticsScript } from "@/components/layout/analytics";
 
 const heading = Manrope({
   subsets: ["latin"],
@@ -38,6 +38,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" className={`${heading.variable} ${body.variable}`}>
       <head>
         <GoogleTagManagerScript />
+        <GoogleAnalyticsScript />
         <script {...jsonLdScriptProps(organizationJsonLd())} />
         <script {...jsonLdScriptProps(legalServiceJsonLd())} />
         <script {...jsonLdScriptProps(websiteJsonLd())} />

@@ -2,9 +2,8 @@ import Script from "next/script";
 import { siteConfig } from "@/config/site";
 
 /**
- * Placed in <head>, as early as possible, per Google Tag Manager's install
- * instructions. `beforeInteractive` is what makes Next.js inject this into
- * the initial HTML <head> regardless of where the component sits in the tree.
+ * GTM script — placed in <head> as early as possible per GTM install docs.
+ * `beforeInteractive` injects this into the initial HTML <head>.
  */
 export function GoogleTagManagerScript() {
   const { gtmId } = siteConfig.analytics;
@@ -24,8 +23,35 @@ export function GoogleTagManagerScript() {
 }
 
 /**
- * Must render immediately after the opening <body> tag per GTM's install
- * instructions (noscript fallback for when JS is disabled).
+ * GA4 script — placed in <head> with beforeInteractive so Google's
+ * verification crawler detects it on first page load.
+ * Matches the "Install manually" snippet from Google Analytics setup.
+ */
+export function GoogleAnalyticsScript() {
+  const { gaId } = siteConfig.analytics;
+  if (!gaId) return null;
+
+  return (
+    <>
+      <Script
+        src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}
+        strategy="beforeInteractive"
+      />
+      <Script id="ga4-init" strategy="beforeInteractive">
+        {`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', '${gaId}');
+        `}
+      </Script>
+    </>
+  );
+}
+
+/**
+ * GTM noscript fallback — must render immediately after the opening <body>
+ * tag per GTM install instructions (for users with JS disabled).
  */
 export function GoogleTagManagerNoscript() {
   const { gtmId } = siteConfig.analytics;
@@ -44,35 +70,24 @@ export function GoogleTagManagerNoscript() {
   );
 }
 
+/**
+ * Microsoft Clarity — loads after page is interactive (doesn't need
+ * to be in <head>, lazy loading is fine for session recording).
+ */
 export function Analytics() {
-  const { gaId, clarityId } = siteConfig.analytics;
+  const { clarityId } = siteConfig.analytics;
+
+  if (!clarityId) return null;
 
   return (
-    <>
-      {gaId && (
-        <>
-          <Script src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`} strategy="afterInteractive" />
-          <Script id="ga4-init" strategy="afterInteractive">
-            {`
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-              gtag('config', '${gaId}', { anonymize_ip: true });
-            `}
-          </Script>
-        </>
-      )}
-      {clarityId && (
-        <Script id="ms-clarity-init" strategy="afterInteractive">
-          {`
-            (function(c,l,a,r,i,t,y){
-              c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-              t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-              y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-            })(window, document, "clarity", "script", "${clarityId}");
-          `}
-        </Script>
-      )}
-    </>
+    <Script id="ms-clarity-init" strategy="afterInteractive">
+      {`
+        (function(c,l,a,r,i,t,y){
+          c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+          t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+          y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window, document, "clarity", "script", "${clarityId}");
+      `}
+    </Script>
   );
 }
