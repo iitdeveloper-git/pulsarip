@@ -1,0 +1,63 @@
+# ===== Version Control =====
+.git
+.gitignore
+.gitattributes
+.github
+
+# ===== Dependencies (rebuilt inside image) =====
+node_modules
+
+# ===== Next.js Build Artifacts =====
+.next
+out
+build
+dist
+
+# ===== Testing =====
+coverage
+playwright-report
+test-results
+e2e
+vitest.config.ts
+vitest.setup.ts
+playwright.config.ts
+
+# ===== Environment Files =====
+.env
+.env.local
+.env.*.local
+
+# ===== Docker Files (not needed inside image) =====
+Dockerfile*
+.dockerignore
+docker-compose*.yml
+
+# ===== Logs =====
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+*.log
+
+# ===== Dev Tooling / Config =====
+.eslintrc*
+.eslintcache
+.prettierrc*
+.stylelintcache
+tsconfig.tsbuildinfo
+*.tsbuildinfo
+
+# ===== Documentation =====
+*.md
+docs
+
+# ===== CI/CD & Tooling =====
+.claude
+.agents
+.turbo
+.cache
+.vercel
+
+# ===== OS Artifacts =====
+.DS_Store
+Thumbs.db
+*.pem

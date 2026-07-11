@@ -1,0 +1,55 @@
+# ===== Dependencies =====
+/node_modules
+/.pnp
+.pnp.js
+.yarn/install-state.gz
+
+# ===== Next.js =====
+/.next/
+/out/
+/build
+
+# ===== Production =====
+/dist
+
+# ===== Testing =====
+/coverage
+/playwright-report
+/test-results
+*.lcov
+
+# ===== Environment Files =====
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.env*.local
+
+# ===== Debug / Logs =====
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+*.log
+
+# ===== TypeScript =====
+*.tsbuildinfo
+next-env.d.ts
+
+# ===== Misc =====
+.DS_Store
+*.pem
+Thumbs.db
+
+# ===== Caches =====
+.eslintcache
+.stylelintcache
+.turbo
+.cache
+
+# ===== Vercel =====
+.vercel
+
+# ===== Docker (local overrides only) =====
+docker-compose.override.yml
