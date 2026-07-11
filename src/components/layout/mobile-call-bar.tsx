@@ -1,5 +1,3 @@
-"use client";
-
 import { Phone, MessageCircle } from "lucide-react";
 import { telHref, whatsappHref } from "@/config/site";
 

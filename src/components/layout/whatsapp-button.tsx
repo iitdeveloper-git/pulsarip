@@ -1,5 +1,3 @@
-"use client";
-
 import { telHref, whatsappHref } from "@/config/site";
 
 // Classic telephone handset SVG (matches the style in the reference)
