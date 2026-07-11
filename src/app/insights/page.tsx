@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { buildMetadata } from "@/lib/seo/metadata";
 import { Breadcrumb } from "@/components/ui/breadcrumb";
 import { Section } from "@/components/ui/section";
-import { blogPosts, blogCategories } from "@/content/blog/posts";
+import { blogPosts } from "@/content/blog/posts";
 import { InsightsBrowser } from "./insights-browser";
 
 const path = "/insights";
@@ -13,6 +13,10 @@ export const metadata: Metadata = buildMetadata({
   path,
 });
 
+// Only show published (non-draft) articles publicly
+const publishedPosts = blogPosts.filter((p) => !p.isDraft);
+const publishedCategories = Array.from(new Set(publishedPosts.map((p) => p.category)));
+
 export default function InsightsPage() {
   return (
     <>
@@ -22,13 +26,18 @@ export default function InsightsPage() {
         <p className="mt-5 max-w-2xl text-lg leading-relaxed text-muted">
           Practical, plain-English guides on trademarks, patents, copyright, and startup legal essentials.
         </p>
-        <p className="mt-4 max-w-2xl text-sm text-muted">
-          Articles marked <span className="font-semibold text-gold-700">Draft</span> are outlines pending
-          review by a qualified legal professional before being treated as final guidance.
-        </p>
       </Section>
       <Section className="pt-0">
-        <InsightsBrowser posts={blogPosts} categories={blogCategories} />
+        {publishedPosts.length > 0 ? (
+          <InsightsBrowser posts={publishedPosts} categories={publishedCategories} />
+        ) : (
+          <div className="rounded-xl2 border border-navy-100 bg-navy-50 p-10 text-center">
+            <p className="text-lg font-semibold text-navy-900">Articles coming soon</p>
+            <p className="mt-2 text-sm text-muted">
+              We are currently reviewing and finalising our legal guides. Check back shortly.
+            </p>
+          </div>
+        )}
       </Section>
     </>
   );

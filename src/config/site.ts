@@ -22,6 +22,7 @@ export const siteConfig = {
   email: env("NEXT_PUBLIC_CONTACT_EMAIL"),
   address: env("NEXT_PUBLIC_OFFICE_ADDRESS"),
   businessHours: env("NEXT_PUBLIC_BUSINESS_HOURS"),
+  founderName: env("NEXT_PUBLIC_FOUNDER_NAME", "Advocate Lucky Singh"),
 
   socialLinks: {
     linkedin: env("NEXT_PUBLIC_LINKEDIN_URL"),

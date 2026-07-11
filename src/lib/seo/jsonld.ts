@@ -14,6 +14,27 @@ export function organizationJsonLd() {
     description: siteConfig.description,
     ...(siteConfig.email ? { email: siteConfig.email } : {}),
     ...(siteConfig.phone ? { telephone: siteConfig.phone } : {}),
+    ...(siteConfig.address
+      ? {
+          address: {
+            "@type": "PostalAddress",
+            streetAddress: siteConfig.address,
+            addressLocality: "Jodhpur",
+            addressRegion: "Rajasthan",
+            addressCountry: "IN",
+          },
+        }
+      : {}),
+    ...(siteConfig.founderName
+      ? { founder: { "@type": "Person", name: siteConfig.founderName, "@id": `${url("/")}#founder` } }
+      : {}),
+    contactPoint: {
+      "@type": "ContactPoint",
+      ...(siteConfig.phone ? { telephone: siteConfig.phone } : {}),
+      contactType: "customer service",
+      areaServed: "IN",
+      availableLanguage: ["English", "Hindi"],
+    },
     sameAs: Object.values(siteConfig.socialLinks).filter(Boolean),
   };
 }
@@ -27,9 +48,32 @@ export function legalServiceJsonLd() {
     url: url("/"),
     description: siteConfig.description,
     areaServed: "IN",
-    ...(siteConfig.address ? { address: { "@type": "PostalAddress", streetAddress: siteConfig.address } } : {}),
     ...(siteConfig.phone ? { telephone: siteConfig.phone } : {}),
+    ...(siteConfig.address
+      ? {
+          address: {
+            "@type": "PostalAddress",
+            streetAddress: siteConfig.address,
+            addressLocality: "Jodhpur",
+            addressRegion: "Rajasthan",
+            addressCountry: "IN",
+          },
+        }
+      : {}),
+    ...(siteConfig.businessHours ? { openingHours: siteConfig.businessHours } : {}),
     priceRange: "Request a quote",
+    hasOfferCatalog: {
+      "@type": "OfferCatalog",
+      name: "IP & Legal Services",
+      itemListElement: [
+        { "@type": "Offer", itemOffered: { "@type": "Service", name: "Trademark Registration" } },
+        { "@type": "Offer", itemOffered: { "@type": "Service", name: "Patent Filing" } },
+        { "@type": "Offer", itemOffered: { "@type": "Service", name: "Copyright Registration" } },
+        { "@type": "Offer", itemOffered: { "@type": "Service", name: "Design Registration" } },
+        { "@type": "Offer", itemOffered: { "@type": "Service", name: "Business Registration" } },
+        { "@type": "Offer", itemOffered: { "@type": "Service", name: "Legal Documentation" } },
+      ],
+    },
   };
 }
 
