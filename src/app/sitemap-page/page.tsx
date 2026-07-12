@@ -45,13 +45,14 @@ const groups: { title: string; links: { label: string; href: string }[] }[] = [
       { label: "Privacy Policy", href: "/privacy-policy" },
       { label: "Terms of Use", href: "/terms" },
       { label: "Cookie Policy", href: "/cookie-policy" },
+      { label: "Refund Policy", href: "/refund-policy" },
       { label: "Legal Disclaimer", href: "/legal-disclaimer" },
       { label: "Accessibility Statement", href: "/accessibility" },
     ],
   },
   {
     title: "Insights",
-    links: blogPosts.map((post) => ({ label: post.title, href: `/insights/${post.slug}` })),
+    links: blogPosts.filter((post) => !post.isDraft).map((post) => ({ label: post.title, href: `/insights/${post.slug}` })),
   },
 ];
 

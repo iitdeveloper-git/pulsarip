@@ -137,19 +137,21 @@ export default function HomePage() {
         </div>
       </Section>
 
-      <Section className="bg-navy-50/60">
-        <div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-end">
-          <SectionHeading eyebrow="Insights" title="Featured articles" />
-          <Link href="/insights" className="focus-ring inline-flex items-center gap-1 rounded font-semibold text-navy-900 hover:gap-2">
-            View all insights <ArrowRight className="h-4 w-4" aria-hidden />
-          </Link>
-        </div>
-        <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {blogPosts.slice(0, 3).map((post) => (
-            <ArticleCard key={post.slug} post={post} />
-          ))}
-        </div>
-      </Section>
+      {blogPosts.filter((post) => !post.isDraft).length > 0 && (
+        <Section className="bg-navy-50/60">
+          <div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-end">
+            <SectionHeading eyebrow="Insights" title="Featured articles" />
+            <Link href="/insights" className="focus-ring inline-flex items-center gap-1 rounded font-semibold text-navy-900 hover:gap-2">
+              View all insights <ArrowRight className="h-4 w-4" aria-hidden />
+            </Link>
+          </div>
+          <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {blogPosts.filter((post) => !post.isDraft).slice(0, 3).map((post) => (
+              <ArticleCard key={post.slug} post={post} />
+            ))}
+          </div>
+        </Section>
+      )}
 
       <Section>
         <SectionHeading eyebrow="FAQs" title="Frequently asked questions" align="center" />

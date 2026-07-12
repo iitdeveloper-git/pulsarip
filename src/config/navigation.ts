@@ -64,6 +64,7 @@ export const footerLegalLinks: NavLink[] = [
   { label: "Privacy Policy", href: "/privacy-policy" },
   { label: "Terms of Use", href: "/terms" },
   { label: "Cookie Policy", href: "/cookie-policy" },
+  { label: "Refund Policy", href: "/refund-policy" },
   { label: "Legal Disclaimer", href: "/legal-disclaimer" },
   { label: "Accessibility Statement", href: "/accessibility" },
 ];
