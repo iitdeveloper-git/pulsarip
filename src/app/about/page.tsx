@@ -93,10 +93,7 @@ export default function AboutPage() {
             <h2 className="text-2xl font-bold text-navy-900">Advocate Lucky Singh</h2>
             <p className="mt-1 text-sm font-medium text-gold-600">Founder &amp; Lead Advocate</p>
             <p className="mt-4 max-w-2xl leading-relaxed text-muted">
-              Advocate Lucky Singh is the founder of PulsarIP, practising from Jodhpur, Rajasthan.
-              With experience across intellectual-property matters, business registration, and corporate
-              legal documentation, Lucky established PulsarIP to make professional IP and legal services
-              accessible to startups, creators, and businesses across India.
+              Lucky Singh is the Founder of PulsarIP and an Advocate practicing before the High Court of Rajasthan. He specializes in intellectual property law, with experience in trademark prosecution, copyright protection, IP litigation, commercial disputes, and intellectual property advisory. He holds an LL.M. in International Law from South Asian University, New Delhi, and an LL.B. from Guru Gobind Singh Indraprastha University (GGSIPU), New Delhi. His academic research focused on intellectual property rights and technology transfer. Lucky has also completed specialized intellectual property certification programs through the World Intellectual Property Organization (WIPO) and the Korea Intellectual Property Office (KIPO) IP PANORAMA initiative. Through PulsarIP, he is committed to helping businesses protect, manage, and commercialize their intellectual property assets with practical, business-focused legal solutions.
             </p>
 
             {/* Contact shortcuts */}
@@ -144,11 +141,21 @@ export default function AboutPage() {
               </div>
             </div>
 
-            {/* Office address */}
-            {siteConfig.address && (
-              <div className="mt-4 flex items-start gap-2 text-sm text-muted">
-                <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-navy-700" aria-hidden />
-                <span>{siteConfig.address}</span>
+            {/* Office addresses */}
+            {(siteConfig.address || siteConfig.correspondenceAddress) && (
+              <div className="mt-6 space-y-3 text-sm text-muted">
+                {siteConfig.address && (
+                  <div className="flex items-start gap-2">
+                    <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-navy-700" aria-hidden />
+                    <span><strong>Registered Office:</strong> {siteConfig.address}</span>
+                  </div>
+                )}
+                {siteConfig.correspondenceAddress && (
+                  <div className="flex items-start gap-2">
+                    <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-navy-700" aria-hidden />
+                    <span><strong>Correspondence Address:</strong> {siteConfig.correspondenceAddress}</span>
+                  </div>
+                )}
               </div>
             )}
           </div>

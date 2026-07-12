@@ -97,11 +97,23 @@ export function Footer() {
               )}
               {siteConfig.address && (
                 <li className="flex items-start gap-2.5">
-                  <MapPin className="mt-0.5 h-4 w-4 flex-shrink-0" aria-hidden />
-                  <span>{siteConfig.address}</span>
+                  <MapPin className="mt-0.5 h-4 w-4 flex-shrink-0 text-navy-400" aria-hidden />
+                  <div>
+                    <span className="block text-xs font-semibold text-white uppercase tracking-wider">Registered Office</span>
+                    <span className="text-navy-300">{siteConfig.address}</span>
+                  </div>
                 </li>
               )}
-              {siteConfig.businessHours && <li className="text-navy-400">{siteConfig.businessHours}</li>}
+              {siteConfig.correspondenceAddress && (
+                <li className="flex items-start gap-2.5">
+                  <MapPin className="mt-0.5 h-4 w-4 flex-shrink-0 text-navy-400" aria-hidden />
+                  <div>
+                    <span className="block text-xs font-semibold text-white uppercase tracking-wider">Correspondence Address</span>
+                    <span className="text-navy-300">{siteConfig.correspondenceAddress}</span>
+                  </div>
+                </li>
+              )}
+              {siteConfig.businessHours && <li className="text-xs text-navy-400">{siteConfig.businessHours}</li>}
             </ul>
           </div>
         </div>

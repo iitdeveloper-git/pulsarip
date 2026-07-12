@@ -57,7 +57,8 @@ describe("contactFormSchema", () => {
 
 describe("contactFormClientSchema", () => {
   it("does not require honeypot/UTM fields from the client", () => {
-    const { website: _website, ...clientPayload } = validPayload;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { website, ...clientPayload } = validPayload;
     const result = contactFormClientSchema.safeParse(clientPayload);
     expect(result.success).toBe(true);
   });
