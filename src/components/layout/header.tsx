@@ -3,10 +3,10 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import { ChevronDown, Menu, Phone, X } from "lucide-react";
+import { ChevronDown, Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { mainNav } from "@/config/navigation";
-import { siteConfig, telHref } from "@/config/site";
+import { siteConfig } from "@/config/site";
 import { LinkButton } from "@/components/ui/button";
 import { MobileNav } from "./mobile-nav";
 
@@ -16,7 +16,6 @@ export function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const navRef = useRef<HTMLElement>(null);
-  const tel = telHref();
 
   useEffect(() => {
     setOpenGroup(null);
@@ -123,12 +122,6 @@ export function Header() {
         </nav>
 
         <div className="hidden items-center gap-3 lg:flex">
-          {tel && (
-            <a href={tel} className="focus-ring flex items-center gap-1.5 rounded-lg px-2 py-2 text-sm font-medium text-navy-700 hover:text-navy-900">
-              <Phone className="h-4 w-4" aria-hidden />
-              {siteConfig.phone}
-            </a>
-          )}
           <LinkButton href="/contact" variant="gold" size="sm">
             Book Consultation
           </LinkButton>
