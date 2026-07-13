@@ -43,14 +43,39 @@ export async function POST(req: NextRequest) {
       console.error("[contact] Failed to send acknowledgement email", err instanceof Error ? err.message : err);
     });
 
+    const webhookPromises: Promise<unknown>[] = [];
+
     if (process.env.CONTACT_FORM_WEBHOOK_URL) {
-      fetch(process.env.CONTACT_FORM_WEBHOOK_URL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...data, submittedAt: new Date().toISOString() }),
-      }).catch((err) => {
-        console.error("[contact] Webhook delivery failed", err instanceof Error ? err.message : err);
-      });
+      webhookPromises.push(
+        fetch(process.env.CONTACT_FORM_WEBHOOK_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ ...data, submittedAt: new Date().toISOString() }),
+        })
+          .catch((err) => {
+            console.error("[contact] Webhook delivery failed", err instanceof Error ? err.message : err);
+          })
+      );
+    }
+
+    if (process.env.GOOGLE_SHEET_WEBHOOK_URL) {
+      webhookPromises.push(
+        fetch(process.env.GOOGLE_SHEET_WEBHOOK_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            submittedAt: new Date().toISOString(),
+            ...data,
+          }),
+        })
+          .catch((err) => {
+            console.error("[contact] Google Sheet webhook failed", err instanceof Error ? err.message : err);
+          })
+      );
+    }
+
+    if (webhookPromises.length > 0) {
+      await Promise.allSettled(webhookPromises);
     }
 
     return NextResponse.json({ ok: true });
