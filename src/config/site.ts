@@ -19,11 +19,11 @@ export const siteConfig = {
 
   phone: env("NEXT_PUBLIC_PHONE", "9773683199"),
   whatsapp: env("NEXT_PUBLIC_WHATSAPP_NUMBER", "+919773683199"),
-  email: env("NEXT_PUBLIC_CONTACT_EMAIL", "info@pulsarIP.com"),
-  enquiryEmail: env("NEXT_PUBLIC_ENQUIRY_EMAIL", "Services@PulsarIP.com"),
-  supportEmail: env("NEXT_PUBLIC_SUPPORT_EMAIL", "Support@Pulsarip.com"),
-  address: env("NEXT_PUBLIC_OFFICE_ADDRESS", "322 Janta colony Kudi Jodhpur, Code 342005"),
-  correspondenceAddress: env("NEXT_PUBLIC_CORRESPONDENCE_ADDRESS", "U11/12 Gurgaon Phase 3"),
+  email: env("NEXT_PUBLIC_CONTACT_EMAIL", "info@pulsarip.com"),
+  enquiryEmail: env("NEXT_PUBLIC_ENQUIRY_EMAIL", "services@pulsarip.com"),
+  supportEmail: env("NEXT_PUBLIC_SUPPORT_EMAIL", "support@pulsarip.com"),
+  address: env("NEXT_PUBLIC_OFFICE_ADDRESS", "322, Janta Colony, Kudi, Jodhpur, Rajasthan – 342005, India"),
+  correspondenceAddress: env("NEXT_PUBLIC_CORRESPONDENCE_ADDRESS", "U11/12, Gurgaon Phase 3, Gurugram, Haryana – 122002, India"),
   businessHours: env("NEXT_PUBLIC_BUSINESS_HOURS", "Mon–Sat: 9:00 AM – 7:00 PM IST"),
   founderName: env("NEXT_PUBLIC_FOUNDER_NAME", "Advocate Lucky Singh"),
 

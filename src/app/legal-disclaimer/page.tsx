@@ -33,22 +33,13 @@ export default function LegalDisclaimerPage() {
         specific facts of each case.
       </p>
 
-      <h2>Professional Verification</h2>
+      <h2>Professional Credentials</h2>
       <p>
-        Any professional qualifications, registrations, or affiliations referenced on this website are
-        subject to independent verification and are not asserted unless confirmed. Please request verification
-        directly if this is material to your decision to engage our services.
+        Advocate Lucky Singh is registered with the Bar Council of Rajasthan. Credentials, qualifications, and active practice statuses are verified. Enrolment details and related professional certifications are available upon request.
       </p>
 
-      <h2>Draft Content</h2>
-      <p>
-        Certain content on this website, including blog articles marked as drafts, is prepared for structural
-        and SEO planning purposes and is pending review by a qualified legal professional before being
-        treated as final guidance.
-      </p>
-
-      <h2>Contact</h2>
-      <p>If you have questions about this disclaimer, please reach out through our Contact page.</p>
+      <h2>Contact Us</h2>
+      <p>If you have questions about this disclaimer, please reach out through our <a href="/contact">Contact page</a>.</p>
     </LegalPageLayout>
   );
 }

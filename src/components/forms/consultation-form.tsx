@@ -93,8 +93,8 @@ export function ConsultationForm({ defaultService }: { defaultService?: string }
         </div>
       )}
 
-      {/* Honeypot field — hidden from real users via CSS, left blank by humans */}
-      <div className="absolute left-[-9999px]" aria-hidden="true">
+      {/* Honeypot field — hidden from users & standard crawlers, left blank by humans */}
+      <div style={{ display: "none" }} aria-hidden="true">
         <label htmlFor="website">Website</label>
         <input id="website" type="text" tabIndex={-1} autoComplete="off" />
       </div>

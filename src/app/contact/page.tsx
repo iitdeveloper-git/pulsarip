@@ -28,12 +28,12 @@ export default function ContactPage() {
   const wa = whatsappHref();
 
   const contactItems = [
-    tel && { icon: Phone, label: "Phone", value: siteConfig.phone, href: tel },
-    wa && { icon: MessageCircle, label: "WhatsApp", value: "Chat with us on WhatsApp", href: wa },
-    siteConfig.email && { icon: Mail, label: "General Enquiries", value: siteConfig.email, href: `mailto:${siteConfig.email}` },
-    siteConfig.enquiryEmail && { icon: Mail, label: "Services & Consultation", value: siteConfig.enquiryEmail, href: `mailto:${siteConfig.enquiryEmail}` },
-    siteConfig.supportEmail && { icon: Mail, label: "Support", value: siteConfig.supportEmail, href: `mailto:${siteConfig.supportEmail}` },
-  ].filter(Boolean) as { icon: typeof Mail; label: string; value: string; href: string }[];
+    { icon: Phone, label: "Phone", value: siteConfig.phone, href: tel || `tel:${siteConfig.phone.replace(/[^\d+]/g, "")}` },
+    { icon: MessageCircle, label: "WhatsApp", value: "Chat with us on WhatsApp", href: wa || `https://wa.me/${siteConfig.whatsapp.replace(/[^\d]/g, "")}` },
+    { icon: Mail, label: "General Enquiries", value: siteConfig.email, href: `mailto:${siteConfig.email}` },
+    { icon: Mail, label: "Services & Consultation", value: siteConfig.enquiryEmail, href: `mailto:${siteConfig.enquiryEmail}` },
+    { icon: Mail, label: "Support", value: siteConfig.supportEmail, href: `mailto:${siteConfig.supportEmail}` },
+  ];
 
   return (
     <>
@@ -49,26 +49,24 @@ export default function ContactPage() {
         <div className="grid gap-10 lg:grid-cols-[1fr_1.4fr]">
           <div className="space-y-4">
 
-            {/* Contact links — only shown when env vars are set */}
-            {contactItems.length > 0 && (
-              <div className="space-y-3">
-                {contactItems.map((item) => (
-                  <a
-                    key={item.label}
-                    href={item.href}
-                    target={item.href.startsWith("http") ? "_blank" : undefined}
-                    rel="noopener noreferrer"
-                    className="focus-ring flex items-start gap-3 rounded-xl2 border border-navy-100 bg-white p-5 shadow-card hover:shadow-card-hover"
-                  >
-                    <item.icon className="mt-0.5 h-5 w-5 text-navy-700" aria-hidden />
-                    <div>
-                      <p className="text-sm font-semibold text-navy-900">{item.label}</p>
-                      <p className="text-sm text-muted">{item.value}</p>
-                    </div>
-                  </a>
-                ))}
-              </div>
-            )}
+            {/* Contact links */}
+            <div className="space-y-3">
+              {contactItems.map((item) => (
+                <a
+                  key={item.label}
+                  href={item.href}
+                  target={item.href.startsWith("http") ? "_blank" : undefined}
+                  rel="noopener noreferrer"
+                  className="focus-ring flex items-start gap-3 rounded-xl2 border border-navy-100 bg-white p-5 shadow-card hover:shadow-card-hover"
+                >
+                  <item.icon className="mt-0.5 h-5 w-5 text-navy-700" aria-hidden />
+                  <div>
+                    <p className="text-sm font-semibold text-navy-900">{item.label}</p>
+                    <p className="text-sm text-muted">{item.value}</p>
+                  </div>
+                </a>
+              ))}
+            </div>
 
             {/* Office Addresses */}
             {(siteConfig.address || siteConfig.correspondenceAddress) && (

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Linkedin, Instagram, Facebook, Youtube, Mail, Phone, MapPin } from "lucide-react";
-import { siteConfig, telHref, mailHref } from "@/config/site";
+import { siteConfig } from "@/config/site";
 import {
   footerBusinessLinks,
   footerLegalLinks,
@@ -34,8 +34,6 @@ function FooterColumn({ title, links }: { title: string; links: { label: string;
 }
 
 export function Footer() {
-  const tel = telHref();
-  const mail = mailHref();
   const socials = Object.entries(siteConfig.socialLinks).filter(([, url]) => url);
 
   return (
@@ -79,41 +77,33 @@ export function Footer() {
           <div>
             <h3 className="mb-4 text-sm font-semibold uppercase tracking-wider text-white">Contact</h3>
             <ul className="space-y-3 text-sm text-navy-300">
-              {mail && (
-                <li className="flex items-start gap-2.5">
-                  <Mail className="mt-0.5 h-4 w-4 flex-shrink-0" aria-hidden />
-                  <a href={mail} className="focus-ring rounded hover:text-white">
-                    {siteConfig.email}
-                  </a>
-                </li>
-              )}
-              {tel && (
-                <li className="flex items-start gap-2.5">
-                  <Phone className="mt-0.5 h-4 w-4 flex-shrink-0" aria-hidden />
-                  <a href={tel} className="focus-ring rounded hover:text-white">
-                    {siteConfig.phone}
-                  </a>
-                </li>
-              )}
-              {siteConfig.address && (
-                <li className="flex items-start gap-2.5">
-                  <MapPin className="mt-0.5 h-4 w-4 flex-shrink-0 text-navy-400" aria-hidden />
-                  <div>
-                    <span className="block text-xs font-semibold text-white uppercase tracking-wider">Registered Office</span>
-                    <span className="text-navy-300">{siteConfig.address}</span>
-                  </div>
-                </li>
-              )}
-              {siteConfig.correspondenceAddress && (
-                <li className="flex items-start gap-2.5">
-                  <MapPin className="mt-0.5 h-4 w-4 flex-shrink-0 text-navy-400" aria-hidden />
-                  <div>
-                    <span className="block text-xs font-semibold text-white uppercase tracking-wider">Correspondence Address</span>
-                    <span className="text-navy-300">{siteConfig.correspondenceAddress}</span>
-                  </div>
-                </li>
-              )}
-              {siteConfig.businessHours && <li className="text-xs text-navy-400">{siteConfig.businessHours}</li>}
+              <li className="flex items-start gap-2.5">
+                <Mail className="mt-0.5 h-4 w-4 flex-shrink-0 text-navy-400" aria-hidden />
+                <a href={`mailto:${siteConfig.email}`} className="focus-ring rounded hover:text-white">
+                  {siteConfig.email}
+                </a>
+              </li>
+              <li className="flex items-start gap-2.5">
+                <Phone className="mt-0.5 h-4 w-4 flex-shrink-0 text-navy-400" aria-hidden />
+                <a href={`tel:${siteConfig.phone.replace(/[^\d+]/g, "")}`} className="focus-ring rounded hover:text-white">
+                  {siteConfig.phone}
+                </a>
+              </li>
+              <li className="flex items-start gap-2.5">
+                <MapPin className="mt-0.5 h-4 w-4 flex-shrink-0 text-navy-400" aria-hidden />
+                <div>
+                  <span className="block text-xs font-semibold text-white uppercase tracking-wider">Registered Office</span>
+                  <span className="text-navy-300">{siteConfig.address}</span>
+                </div>
+              </li>
+              <li className="flex items-start gap-2.5">
+                <MapPin className="mt-0.5 h-4 w-4 flex-shrink-0 text-navy-400" aria-hidden />
+                <div>
+                  <span className="block text-xs font-semibold text-white uppercase tracking-wider">Correspondence Address</span>
+                  <span className="text-navy-300">{siteConfig.correspondenceAddress}</span>
+                </div>
+              </li>
+              <li className="text-xs text-navy-400">{siteConfig.businessHours}</li>
             </ul>
           </div>
         </div>

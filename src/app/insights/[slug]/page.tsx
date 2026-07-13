@@ -14,13 +14,13 @@ import { blogPosts, getPostBySlug } from "@/content/blog/posts";
 type PageParams = Promise<{ slug: string }>;
 
 export function generateStaticParams() {
-  return blogPosts.map((post) => ({ slug: post.slug }));
+  return blogPosts.filter((post) => !post.isDraft).map((post) => ({ slug: post.slug }));
 }
 
 export async function generateMetadata({ params }: { params: PageParams }): Promise<Metadata> {
   const { slug } = await params;
   const post = getPostBySlug(slug);
-  if (!post) return buildMetadata({ title: "Article not found", description: "This article could not be found.", path: `/insights/${slug}`, noIndex: true });
+  if (!post || post.isDraft) return buildMetadata({ title: "Article not found", description: "This article could not be found.", path: `/insights/${slug}`, noIndex: true });
   return buildMetadata({
     title: post.title,
     description: post.metaDescription,
@@ -32,9 +32,9 @@ export async function generateMetadata({ params }: { params: PageParams }): Prom
 export default async function BlogPostPage({ params }: { params: PageParams }) {
   const { slug } = await params;
   const post = getPostBySlug(slug);
-  if (!post) notFound();
+  if (!post || post.isDraft) notFound();
 
-  const related = blogPosts.filter((p) => p.slug !== post.slug && p.category === post.category).slice(0, 3);
+  const related = blogPosts.filter((p) => !p.isDraft && p.slug !== post.slug && p.category === post.category).slice(0, 3);
   const path = `/insights/${post.slug}`;
 
   return (
