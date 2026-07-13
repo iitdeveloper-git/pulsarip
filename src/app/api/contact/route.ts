@@ -43,52 +43,14 @@ export async function POST(req: NextRequest) {
       console.error("[contact] Failed to send acknowledgement email", err instanceof Error ? err.message : err);
     });
 
-    const webhookPromises: Promise<void>[] = [];
-
     if (process.env.CONTACT_FORM_WEBHOOK_URL) {
-      console.log("[contact] Sending request to general webhook...");
-      webhookPromises.push(
-        fetch(process.env.CONTACT_FORM_WEBHOOK_URL, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ ...data, submittedAt: new Date().toISOString() }),
-        })
-          .then((res) => {
-            console.log(`[contact] General webhook completed with status: ${res.status}`);
-          })
-          .catch((err) => {
-            console.error("[contact] Webhook delivery failed", err instanceof Error ? err.message : err);
-          })
-      );
-    }
-
-    // Send submission data to Google Sheet via webhook (if configured)
-    if (process.env.GOOGLE_SHEET_WEBHOOK_URL) {
-      console.log("[contact] Sending request to Google Sheets webhook...");
-      webhookPromises.push(
-        fetch(process.env.GOOGLE_SHEET_WEBHOOK_URL, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            submittedAt: new Date().toISOString(),
-            ...data,
-          }),
-        })
-          .then(async (res) => {
-            console.log(`[contact] Google Sheet webhook completed with status: ${res.status}`);
-            if (!res.ok) {
-              const bodyText = await res.text().catch(() => "");
-              console.error(`[contact] Google Sheet webhook error details: ${bodyText}`);
-            }
-          })
-          .catch((err) => {
-            console.error("[contact] Google Sheet webhook failed", err instanceof Error ? err.message : err);
-          })
-      );
-    }
-
-    if (webhookPromises.length > 0) {
-      await Promise.allSettled(webhookPromises);
+      fetch(process.env.CONTACT_FORM_WEBHOOK_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...data, submittedAt: new Date().toISOString() }),
+      }).catch((err) => {
+        console.error("[contact] Webhook delivery failed", err instanceof Error ? err.message : err);
+      });
     }
 
     return NextResponse.json({ ok: true });
